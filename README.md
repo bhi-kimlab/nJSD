@@ -1,5 +1,5 @@
 #nJSD
-=====================
+
 nJSD is code for calculate transcriptome-based ITH with RNA-sequencing data using entropy concept.
 
 
