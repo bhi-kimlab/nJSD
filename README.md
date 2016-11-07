@@ -58,4 +58,4 @@ result:
 
 Citation
 ----------------------
-tba
+Y. Park, S. Lim, J. Nam, S. Kim, Measuring intratumor heterogeneity by network entropy using RNA-seq data, Scientific Reports (in press)
