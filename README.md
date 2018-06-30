@@ -6,10 +6,10 @@ Transcriptome-based ITH (tITH) of tumor state was calculated by considering both
 
 Requirements
 ---------------------
-* Linux/Unix
-* Python 2.7
+* Linux
+* Python 2.7+    (recommend 2.7.15)
 * NumPy 
-* NetworkX
+* NetworkX 2.1+  (recommend 2.1)
 
 
 Simple nJSD
@@ -17,11 +17,11 @@ Simple nJSD
 It compute distance (nJSD) between two GEPs and calculate tITH score.
 
 
-    run_simple.py [-h] [-n NETWORK] [-r R_GEP] [-q Q_GEP]
+    run_simple.py [-h] [-n NETWORK] [-r R_GEP] [-i Q_GEP]
     -h, --help  show this help message and exit
     -n NETWORK  Location to network file: geneA geneB
     -r R_GEP    File name of Refernece gene-expression profile
-    -q Q_GEP    File name of Query gene-expression profile
+    -i Q_GEP    File name of Query gene-expression profile
 
 
 Network file must follow below format.
@@ -46,7 +46,7 @@ In the example directory, there are test data.
 
 example:
 
-    ./run_simple.py -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2
+    ./run_simple.py -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2
 
 
 result:
@@ -58,4 +58,4 @@ result:
 
 Citation
 ----------------------
-Y. Park, S. Lim, J. Nam, S. Kim, Measuring intratumor heterogeneity by network entropy using RNA-seq data, Scientific Reports (in press)
+Y. Park, S. Lim, J. Nam, S. Kim, Measuring intratumor heterogeneity by network entropy using RNA-seq data, Scientific Reports (2016)
