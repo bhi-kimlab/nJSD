@@ -1,5 +1,6 @@
 import numpy
 
+
 def load_string(WHICH_NETWORK):
     import networkx as Nx
 
@@ -22,14 +23,14 @@ def load_string(WHICH_NETWORK):
     FD.close()
     return GRAPH, gene_set 
 
-def load_kegg(FILENAME):
+def load_geneset(FILENAME):
     FD = open(FILENAME,"r")
 
     module_set_dic = {}
     for line in FD.readlines():
         block = line.rstrip("\n").split("\t")
         
-        module_set_dic[block[0]] = set(block[2:])
+        module_set_dic[block[0]] = set(block[1:])
 
     FD.close()
     return module_set_dic

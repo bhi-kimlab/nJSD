@@ -1,11 +1,12 @@
 import numpy
 import networkx as Nx
 
+
 def cal_JSD(GRAPH, QUERY_DIC, NORMAL_DIC, MODULE_LIST):
     entropy_dic = {}
     nkeys       = NORMAL_DIC.keys()
     assert nkeys != 0, "GEP has 0 nodes"
-
+    solo_gene_set = set();
     for node in MODULE_LIST:
         '''Find neighbor in GRAPH.
         Based on netighbor information, calculate JSD of node
@@ -21,12 +22,12 @@ def cal_JSD(GRAPH, QUERY_DIC, NORMAL_DIC, MODULE_LIST):
                                             node is not exist in GRAPH"
 
             node_neighbors = [n for n in GRAPH.neighbors(node)]
-
             if len(node_neighbors) == 0:
                 continue
         except:
-            print "Unexpected termination: Graph_neighbor error"
-            exit(0)
+            ''' To dump list of genes which are not exist                      \
+                             in GRAPH or query expression profile '''
+            solo_gene_set.add(node)
 
         query_score  = []
         normal_score = []
@@ -87,7 +88,8 @@ def cal_JSD(GRAPH, QUERY_DIC, NORMAL_DIC, MODULE_LIST):
         jsd = KL_tm + KL_nm
 
         entropy_dic[node] = jsd/2
-    return entropy_dic
+    return entropy_dic, solo_gene_set
+
 
 def cal_whole_JSD(FIRST_DIC, SECOND_DIC, MODULE_LIST):
     '''It doesn't use network information
