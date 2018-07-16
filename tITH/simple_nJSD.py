@@ -38,7 +38,7 @@ def gene_set_cal(W_NETWORK, REF_EXP, QRY_EXP, GENESET_LIST):
         total_entropy = numpy.average(entropy_dic.values())
 
         i_dic           = SHARE.make_Istate(query_gep_dic)
-        i_entropy_dic   = CE.cal_JSD(G, i_dic, normal_gep_dic,geneset_module)[0]
+        i_entropy_dic   = CE.cal_JSD(G, i_dic, query_gep_dic,geneset_module)[0]
         i_total_entropy = numpy.average(i_entropy_dic.values())
         
         ''' nJSD from <query> gene expression profile to state H 
@@ -83,7 +83,7 @@ def whole_cal(W_NETWORK, REF_EXP, QRY_EXP):
     total_entropy = numpy.average(entropy_dic.values())
 
     i_dic           = SHARE.make_Istate(query_gep_dic)
-    i_entropy_dic   = CE.cal_JSD(G, i_dic, normal_gep_dic, module_geneset_list)[0]
+    i_entropy_dic   = CE.cal_JSD(G, i_dic, query_gep_dic, module_geneset_list)[0]
     i_total_entropy = numpy.average(i_entropy_dic.values())
     
     ''' nJSD from <query> gene expression profile to state H 

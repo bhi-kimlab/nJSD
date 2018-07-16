@@ -66,8 +66,8 @@ example:
     python nJSD.py whole -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2
     
 result:
-    
-    example/Toy.profile2    [Ref. -> Query: 0.003935]       [Query -> stateH: 0.007693]     <tITH: 0.338413>
+
+    example/Toy.profile2    [Ref. -> Query: 0.003935]       [Query -> stateH: 0.006820]     <tITH: 0.365869>
     
 example:
 
@@ -78,7 +78,7 @@ result:
     example/Toy.profile2     1st_pwy         [Ref. -> Query: 0.007822]      [Query -> stateH: 0.009385]     <tITH: 0.454582> 
     example/Toy.profile2     3rd_pwy         [Ref. -> Query: 0.005215]      [Query -> stateH: 0.007102]     <tITH: 0.423379> 
     example/Toy.profile2     2nd_pwy         [Ref. -> Query: 0.000000]      [Query -> stateH: 0.004261]     <tITH: 0.000000> 
-    example/Toy.profile2     4th_pwy         [Ref. -> Query: 0.007909]      [Query -> stateH: 0.007403]     <tITH: 0.516523> 
+    example/Toy.profile2     4th_pwy         [Ref. -> Query: 0.007909]      [Query -> stateH: 0.004261]     <tITH: 0.649850> 
     example/Toy.profile2     5th_pwy         [Ref. -> Query: 0.004470]      [Query -> stateH: 0.012175]     <tITH: 0.268536> 
 
 
