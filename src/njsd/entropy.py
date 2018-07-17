@@ -34,7 +34,10 @@ def exp2prob(expression_vector):
         expression_vector (list): List of expression values.
     """
     v = np.asarray(expression_vector)
-    return np.zeros(len(expression_vector)) if (np.sum(v) == 0) else return v / np.sum(v)
+    if np.sum(v) == 0:
+        return np.zeros(len(expression_vector))
+    else:
+        return v / np.sum(v)
 
 
 def kld(p1, p2):

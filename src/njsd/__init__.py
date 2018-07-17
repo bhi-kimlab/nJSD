@@ -2,8 +2,8 @@ __version__ = '0.1.0'
 
 import numpy as np
 
-import util
-import entropy
+import njsd.util as util
+import njsd.entropy as entropy
 
 def njsd_all(network, ref, query):
     """Compute transcriptome-wide nJSD between reference and query expression profiles.
@@ -31,5 +31,12 @@ def njsd_all(network, ref, query):
     return normal_to_tumor_njsd / (normal_to_tumor_njsd + tumor_to_ambiguous_njsd)
 
 
-if __name__ == '__main__':
-    main()
+def njsd_geneset(network, ref, query, geneset):
+    """Compute gene set-specified nJSD between reference and query expression profiles.
+    Attribute;
+        network (str): File path to a network file.
+        ref (str): File path to a reference expression file.
+        query (str): File path to a query expression file.
+        geneset (str): File path to a gene set file.
+    """
+    pass

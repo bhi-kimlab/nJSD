@@ -15,12 +15,20 @@ Why does this file exist, and why not put this in __main__?
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
 import argparse
+import njsd
 
-parser = argparse.ArgumentParser(description='Command description.')
-parser.add_argument('names', metavar='NAME', nargs=argparse.ZERO_OR_MORE,
-                    help="A name of something.")
+# Create top-level parser.
+parser = argparse.ArgumentParser(description='Calculate network-based Jensen-Shannon Divergence.')
+parser.add_argument('-n', '--network', required=True, help='Pre-defined network')
+parser.add_argument('-r', '--ref', required=True, help='Reference gene expression profile')
+parser.add_argument('-q', '--query', required=True, help='Query gene expression profile')
+parser.add_argument('-t', '--geneset', default=None, help='Gene set list')
 
 
 def main(args=None):
     args = parser.parse_args(args=args)
-    print(args.names)
+    if args.geneset is not None:
+        result = njsd.njsd_geneset(args.network, args.ref, args.query, args.geneset)
+    else:
+        result = njsd.njsd_all(args.network, args.ref, args.query)
+    print(args.ref, args.query, args.geneset)
