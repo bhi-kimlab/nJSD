@@ -4,7 +4,9 @@ nJSD is a python package for calculating distance between two biological network
 
 ## Installation
 
-```pip install njsd```
+```python
+pip install njsd
+```
 
 ## Usage
 
@@ -38,7 +40,7 @@ Note that `-t GENESET` option is optional. If `-t` option is specified, *gene se
     GeneSymbol1 GeneSymbol4
     ...
 
-**Gene expression profile** file must follow the format below. Again, the header doesn't matter. Note that `njsd` will automatically apply log2-transformation to expression values by taking log2(expression + 1), we recommend giving `njsd` unnormalized expression values, such as raw FPKM, RPKM or TPM.
+**Gene expression profile**, which should be given with `-r/--ref` or `-q/--query` option must follow the format below. Again, the header doesn't matter. Note that `njsd` will automatically apply log2-transformation to expression values by taking log2(expression + 1), we recommend giving `njsd` unnormalized expression values, such as raw FPKM, RPKM or TPM.
 
     GeneSymbol  ExpressionValue       # Header
     GeneA 10
@@ -46,42 +48,56 @@ Note that `-t GENESET` option is optional. If `-t` option is specified, *gene se
     BeneC 30
     ...
 
-**Gene set list** file must follow the format below. Please be warned that this file should **not** have a header. The first column denotes names of each gene set(or group), and the following columns represent the member of each group.
+**Gene set list**, which should be given with `-t/--geneset` option file must have the format below. Please be warned that this file should **not** have a header. The first column denotes names of each gene set(or group), and the following columns represent the members of each group.
 
     Group1Name  GeneA   GeneB   GeneC   ...
     Group2Name  GeneD   GeneE   GeneF   ...
     Group3Name  GeneA   GeneG   GeneH   ...
     ...
 
+## Examples
 
-When the gene set of reference GEP is differ to gene set of query GEP file and geneset list file.
-The difference is dumped into a file with name "dumpgene+date".
+Toy data, which represents three different gene expression profiles(`Toy.profile1, Toy.profile2, Toy.profile3`) which are instantiation of the template network(`Toy.network`), are given in `example` directory. Following execution scenarios show how to compute nJSD between the gene expression profiles.
 
+The template network and its instantiations are shown as below:
 
-Toy Data
-----------------------
+[TODO: Draw network and expressions.]
 
-In the example directory, there are toy data.
+### Transcriptome-wide nJSD
 
-example:
+You can compute transcriptome-wide nJSD as below:
 
-    python nJSD.py whole -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2
+```shell
+njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -o output_njsd_all.txt
+```
 
-result:
+Output file contains nJSD_NT(Normal-to-Tumor nJSD), nJSD_TA(Tumor-to-maximally Ambiguous state), and tITH values. You can think of *Normal* as *Reference*, and *Tumor* as *Query* gene expression profiles.
 
-    example/Toy.profile2    [Ref. -> Query: 0.003935]       [Query -> stateH: 0.006820]     <tITH: 0.365869>
+```shell
+$ cat output_njsd_all.txt
+nJSD_NT nJSD_TA tITH
+0.003935020793376432 0.0068202519228746615 0.36586899255754446
+```
 
-example:
+### Gene set-specified nJSD
 
-    python nJSD.py geneset -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2 -t example/Toy.geneset
+You can compute gene set-specified nJSD by specifying `-t/--geneset` option as below:
 
-result:
+```shell
+njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -t example/Toy.geneset -o output_njsd_gene_set.txt
+```
 
-    example/Toy.profile2     1st_pwy         [Ref. -> Query: 0.007822]      [Query -> stateH: 0.009385]     <tITH: 0.454582> 
-    example/Toy.profile2     3rd_pwy         [Ref. -> Query: 0.005215]      [Query -> stateH: 0.007102]     <tITH: 0.423379> 
-    example/Toy.profile2     2nd_pwy         [Ref. -> Query: 0.000000]      [Query -> stateH: 0.004261]     <tITH: 0.000000> 
-    example/Toy.profile2     4th_pwy         [Ref. -> Query: 0.007909]      [Query -> stateH: 0.004261]     <tITH: 0.649850> 
-    example/Toy.profile2     5th_pwy         [Ref. -> Query: 0.004470]      [Query -> stateH: 0.012175]     <tITH: 0.268536> 
+Output file contains nJSD_NT, nJSD_TA, tITH values for each gene set.
+
+```shell
+$ cat output_njsd_gene_set.txt
+Gene_set_ID     nJSD_NT nJSD_TA tITH
+1st_pwy 0.00782194587529338     0.00938496594270829     0.45458162150340947
+2nd_pwy 0.0     0.004261233542045538    0.0
+3rd_pwy 0.00521463058352892     0.00710205590340923     0.4233793390015275
+4th_pwy 0.007908518155920452    0.004261233542045538    0.6498504120870645
+5th_pwy 0.006257556700234704    0.008522467084091077    0.42337933900152747
+```
 
 
 Citation
