@@ -56,7 +56,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Topic :: Utilities',
-        'Topic :: Bioinformatics',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
     ],
     keywords=[
         # eg: 'keyword1', 'keyword2', 'keyword3',
