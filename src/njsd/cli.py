@@ -22,13 +22,15 @@ parser = argparse.ArgumentParser(description='Calculate network-based Jensen-Sha
 parser.add_argument('-n', '--network', required=True, help='Pre-defined network')
 parser.add_argument('-r', '--ref', required=True, help='Reference gene expression profile')
 parser.add_argument('-q', '--query', required=True, help='Query gene expression profile')
+parser.add_argument('-o', '--output', required=True, help='Output file.')
 parser.add_argument('-t', '--geneset', default=None, help='Gene set list')
 
 
 def main(args=None):
     args = parser.parse_args(args=args)
     if args.geneset is not None:
-        result = njsd.njsd_geneset(args.network, args.ref, args.query, args.geneset)
+        # Run gene set-specified nJSD calculation.
+        result = njsd.njsd_geneset(args.network, args.ref, args.query, args.geneset, file=args.output)
     else:
-        result = njsd.njsd_all(args.network, args.ref, args.query)
-    print(args.ref, args.query, args.geneset)
+        # Run transcriptome-wide nJSD calculation.
+        result = njsd.njsd_all(args.network, args.ref, args.query, file=args.output)

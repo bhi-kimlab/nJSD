@@ -27,16 +27,17 @@ def parse_gene_set(gene_set_fp):
     Attribute:
         gene_set_fp (str): File path to a gene set file.
     """
-    group_gene_set_dictionary = dict()
+    group_gene_set_dict = dict()
 
     with open(gene_set_fp) as inFile:
-        tokens = line.strip().split('\t')
-        group = tokens[0]
-        gene_set = set(tokens[1:])
+        for line in inFile.readlines():
+            tokens = line.strip().split('\t')
+            group = tokens[0]
+            gene_set = set(tokens[1:])
 
-        group_gene_set_dictionary[group] = gene_set
+            group_gene_set_dict[group] = gene_set
 
-    return group_gene_set_dictionary
+    return group_gene_set_dict
 
 
 def parse_gene_expression(gene_expression_fp, mean=False):
@@ -64,4 +65,6 @@ def parse_gene_expression(gene_expression_fp, mean=False):
 
 
 def get_maximally_ambiguous_network(query_gene_expression_dict):
+    """Return maximally ambiguous network by assigning expression value of 1.0 to all of the genes.
+    """
     return {gene: 1.0 for gene in query_gene_expression_dict.keys()}

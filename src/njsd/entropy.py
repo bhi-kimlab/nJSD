@@ -7,7 +7,6 @@ def find_neighbors(graph, node):
         graph (networkx.Graph): A graph instance.
         node (str): Name of a node.
     """
-    assert nx.info(graph, node), 'No such gene: %s' % node
     return list(graph.neighbors(node))
 
 
@@ -44,7 +43,7 @@ def kld(p1, p2):
     """Compute Kullback-Leibler divergence between p1 and p2.
     It assumes that p1 and p2 are already normalized that each of them sums to 1.
     """
-    return np.sum(np.where(p != 0, p * np.log(p / q), 0))
+    return np.sum(np.where(p1 != 0, p1 * np.log(p1 / p2), 0))
 
 
 def jsd(p1, p2):
@@ -55,14 +54,17 @@ def jsd(p1, p2):
     return (kld(p1, m) + kld(p2, m)) / 2
 
 
-def njsd(network, ref_gene_expression_dict, query_gene_expression_dict, gene_set_present):
+def njsd(network, ref_gene_expression_dict, query_gene_expression_dict, gene_set):
     """Calculate Jensen-Shannon divergence between query and reference gene expression profile.
     """
     gene_jsd_dict = dict()
     reference_genes = ref_gene_expression_dict.keys()
     assert len(reference_genes) != 'Reference gene expression profile should have > 0 genes.'
 
-    for gene in gene_set_present:
+    for gene in gene_set:
+        if gene not in network.nodes:
+            continue
+
         neighbors = find_neighbors(network, gene)
 
         # If there is no neighbor for the gene, just ignore it.
@@ -82,4 +84,4 @@ def njsd(network, ref_gene_expression_dict, query_gene_expression_dict, gene_set
 
         gene_jsd_dict[gene] = jsd(query_p_vec, ref_p_vec)
 
-    return np.mean(gene_jsd_dict.values())
+    return np.mean(list(gene_jsd_dict.values()))
