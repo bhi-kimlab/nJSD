@@ -27,6 +27,10 @@ setup(
     version='0.1.0',
     license='BSD 2-Clause License',
     description='Calculate Jensen-Shannon Divergence between two gene expression profiles to measure transcriptome-based intratumor heterogeneity(tITH).',
+    author='Youngjune Park',
+    author_email='regjah@gmail.com',
+    maintainer='Dohoon Lee',
+    maintainer_email='dohlee.bioinfo@gmail.com',
     # long_description='%s\n%s' % (
     #     re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
     #     re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
