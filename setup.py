@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='njsd',
-    version='0.1.1',
+    version='0.1.2',
     license='BSD 2-Clause License',
     description='Calculate Jensen-Shannon Divergence between two gene expression profiles to measure transcriptome-based intratumor heterogeneity(tITH).',
     author='Youngjune Park',
