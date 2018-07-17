@@ -1,6 +1,8 @@
 import networkx as nx
 import numpy as np
 
+from collections import OrderedDict
+
 
 def parse_network(network_fp):
     """Parses network file and returns a network instance and a gene set.
@@ -27,7 +29,7 @@ def parse_gene_set(gene_set_fp):
     Attribute:
         gene_set_fp (str): File path to a gene set file.
     """
-    group_gene_set_dict = dict()
+    group_gene_set_dict = OrderedDict()
 
     with open(gene_set_fp) as inFile:
         for line in inFile.readlines():
@@ -47,7 +49,7 @@ def parse_gene_expression(gene_expression_fp, mean=False):
         mean (bool): When making a normal(reference) gene expression profile, you might use
             average values of gene expressions for each gene. In this case, pass mean=True.
     """
-    gene_expression_dict = dict()
+    gene_expression_dict = OrderedDict()
     with open(gene_expression_fp) as inFile:
         inFile.readline()  # Skip header.
         for line in inFile.readlines():
