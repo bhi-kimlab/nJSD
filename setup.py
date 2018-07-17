@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='njsd',
-    version='0.1.0',
+    version='0.1.1',
     license='BSD 2-Clause License',
     description='Calculate Jensen-Shannon Divergence between two gene expression profiles to measure transcriptome-based intratumor heterogeneity(tITH).',
     author='Youngjune Park',
@@ -36,6 +36,7 @@ setup(
     #     re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
     # ),
     long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     url='https://github.com/iron-lion/nJSD',
     packages=find_packages('src'),
     package_dir={'': 'src'},
