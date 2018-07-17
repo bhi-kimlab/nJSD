@@ -1,34 +1,36 @@
-#nJSD
+# nJSD
 
-nJSD is code for calculating distance between two biological networks instantiated with gene-expression profiles using entropy concept. 
-It was designed to measure intratumor heterogeneity from bulk RNA-sequencing data.
-Transcriptome-based ITH (tITH) of tumor state was calculated by considering both normal state and ideally heterogeneous state.
+nJSD is a python package for calculating distance between two biological networks instantiated with gene-expression profiles using entropy concept. It was designed to measure intratumor heterogeneity from bulk RNA-sequencing data. **Transcriptome-based ITH (tITH)** of tumor state was calculated by considering both normal state and ideally heterogeneous state.
 
-Requirements
----------------------
-* Linux
-* Python 2.7+    (recommend 2.7.15)
-* NumPy 
-* NetworkX 2.1+  (recommend 2.1)
+## Installation
 
+```pip install njsd```
 
- nJSD
-----------------------
-It compute distance (nJSD) between two GEPs and calculate tITH score.
-Two functions are supported.
- 'whole' is to caclulate nJSD on whole given gene set in expression data.
- 'geneset' need additional geneset list file and show tITH on user given gene set.
-   
-    nJSD.py whole [-h] [-n NETWORK] [-r R_GEP] [-i Q_GEP]
-    nJSD.py geneset [-h] [-n NETWORK] [-r R_GEP] [-i Q_GEP] [-t GENESET_FILE]
-    
-    -h, --help  show this help message and exit
-    -n NETWORK  Location to network file: geneA geneB
-    -r R_GEP    File name of Refernece gene-expression profile
-    -i Q_GEP    File name of Query gene-expression profile
-    -t GENESET  File name of Gene set (like pathway)
+## Usage
 
-Network file must follow below format.
+nJSD supports command-line invocation as below:
+
+```shell
+usage: njsd [-h] -n NETWORK -r REF -q QUERY -o OUTPUT [-t GENESET]
+
+Calculate network-based Jensen-Shannon Divergence.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NETWORK, --network NETWORK
+                        Pre-defined network
+  -r REF, --ref REF     Reference gene expression profile
+  -q QUERY, --query QUERY
+                        Query gene expression profile
+  -o OUTPUT, --output OUTPUT
+                        Output file.
+  -t GENESET, --geneset GENESET
+                        Gene set list
+```
+
+Note that `-t GENESET` option is optional. If `-t` option is specified, *gene set-specified* nJSD and tITH will be computed. Otherwise, `njsd` will compute *transcriptome-wide* nJSD of the two expression profiles and tITH of query gene expression profile.
+
+**Network file**, which should be given with `-n/--network` option must be formatted as below where each line specifies an edge in the network. `njsd` will simply ignore the header by skipping a single line, so you may name each column in a human-friendly way:
 
     GeneA GeneB               # Header
     GeneSymbol1 GeneSymbol2
@@ -36,7 +38,7 @@ Network file must follow below format.
     GeneSymbol1 GeneSymbol4
     ...
 
-GEP file must follow below format.
+**Gene expression profile** file must follow the format below. Again, the header doesn't matter. Note that `njsd` will automatically apply log2-transformation to expression values by taking log2(expression + 1), we recommend giving `njsd` unnormalized expression values, such as raw FPKM, RPKM or TPM.
 
     GeneSymbol  ExpressionValue       # Header
     GeneA 10
@@ -44,7 +46,7 @@ GEP file must follow below format.
     BeneC 30
     ...
 
-Geneset List file must follow below format. (No header)
+**Gene set list** file must follow the format below. Please be warned that this file should **not** have a header. The first column denotes names of each gene set(or group), and the following columns represent the member of each group.
 
     Group1Name  GeneA   GeneB   GeneC   ...
     Group2Name  GeneD   GeneE   GeneF   ...
@@ -64,11 +66,11 @@ In the example directory, there are toy data.
 example:
 
     python nJSD.py whole -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2
-    
+
 result:
 
     example/Toy.profile2    [Ref. -> Query: 0.003935]       [Query -> stateH: 0.006820]     <tITH: 0.365869>
-    
+
 example:
 
     python nJSD.py geneset -n example/Toy.network -r example/Toy.profile1 -i example/Toy.profile2 -t example/Toy.geneset
