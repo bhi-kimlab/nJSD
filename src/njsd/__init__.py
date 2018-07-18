@@ -34,7 +34,7 @@ def njsd_all(network, ref, query, file):
     tITH = normal_to_tumor_njsd / (normal_to_tumor_njsd + tumor_to_ambiguous_njsd)
 
     with open(file, 'a') as outFile:
-        print(normal_to_tumor_njsd, tumor_to_ambiguous_njsd, tITH, file=outFile)
+        print(normal_to_tumor_njsd, tumor_to_ambiguous_njsd, tITH, sep='\t', file=outFile)
     return normal_to_tumor_njsd / (normal_to_tumor_njsd + tumor_to_ambiguous_njsd)
 
 

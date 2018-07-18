@@ -59,38 +59,67 @@ Note that `-t GENESET` option is optional. If `-t` option is specified, *gene se
 
 Toy data, which represents three different gene expression profiles(`Toy.profile1, Toy.profile2, Toy.profile3`) which are instantiation of the template network(`Toy.network`), are given in `example` directory. Following execution scenarios show how to compute nJSD between the gene expression profiles.
 
-The template network and its instantiations are shown as below:
+The template network is shown:
 
-[TODO: Draw network and expressions.]
+![network](img/network.svg)
+
+And figures below are three gene expression profiles instantiated on top of the template network:
+
+![profiles](img/profiles.svg)
 
 ### Transcriptome-wide nJSD
 
 You can compute transcriptome-wide nJSD as below:
 
 ```shell
-njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -o output_njsd_all.txt
+$ njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -o profile2_njsd_all.txt
 ```
 
 Output file contains nJSD_NT(Normal-to-Tumor nJSD), nJSD_TA(Tumor-to-maximally Ambiguous state), and tITH values. You can think of *Normal* as *Reference*, and *Tumor* as *Query* gene expression profiles.
 
 ```shell
-$ cat output_njsd_all.txt
+$ cat profile2_njsd_all.txt
+```
+
+```shell
 nJSD_NT nJSD_TA tITH
 0.003935020793376432 0.0068202519228746615 0.36586899255754446
 ```
+
+Let's compare nJSDs between profile 1 and 2, and profile 1 and 3. 
+
+```shell
+$ njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile3 -o profile3_njsd_all.txt
+```
+
+```shell
+$ cut -f1 profile2_njsd_all.txt profile3_njsd_all.txt
+```
+
+```shell
+nJSD_NT
+0.003935020793376432
+nJSD_NT
+0.007758064133920005
+```
+
+Indeed, the distance between profile1 and 3 is greater than that of profile 1 and 2.
 
 ### Gene set-specified nJSD
 
 You can compute gene set-specified nJSD by specifying `-t/--geneset` option as below:
 
 ```shell
-njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -t example/Toy.geneset -o output_njsd_gene_set.txt
+$ njsd -n example/Toy.network -r example/Toy.profile1 -q example/Toy.profile2 -t example/Toy.geneset -o output_njsd_gene_set.txt
 ```
 
-Output file contains nJSD_NT, nJSD_TA, tITH values for each gene set.
+Each line of the output file contains nJSD_NT, nJSD_TA, tITH values for each gene set.
 
 ```shell
 $ cat output_njsd_gene_set.txt
+```
+
+```shell
 Gene_set_ID     nJSD_NT nJSD_TA tITH
 1st_pwy 0.00782194587529338     0.00938496594270829     0.45458162150340947
 2nd_pwy 0.0     0.004261233542045538    0.0
@@ -99,7 +128,7 @@ Gene_set_ID     nJSD_NT nJSD_TA tITH
 5th_pwy 0.006257556700234704    0.008522467084091077    0.42337933900152747
 ```
 
-
 Citation
 ----------------------
+
 Y. Park, S. Lim, J. Nam, S. Kim, Measuring intratumor heterogeneity by network entropy using RNA-seq data, Scientific Reports (2016)
