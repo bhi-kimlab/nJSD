@@ -1,5 +1,5 @@
-import networkx as nx
 import numpy as np
+
 
 def find_neighbors(graph, node):
     """Find neighbors of a node in a graph.
@@ -66,10 +66,6 @@ def njsd(network, ref_gene_expression_dict, query_gene_expression_dict, gene_set
             continue
 
         neighbors = find_neighbors(network, gene)
-
-        # If there is no neighbor for the gene, just ignore it.
-        if len(neighbors) == 0:
-            continue
 
         query_expression_vec = get_neighbor_expression_vector(neighbors, query_gene_expression_dict)
         ref_expression_vec = get_neighbor_expression_vector(neighbors, ref_gene_expression_dict)
